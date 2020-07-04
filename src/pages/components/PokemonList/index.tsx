@@ -7,8 +7,6 @@ interface Props {
 }
 
 const PokemonList: React.FC<Props> = ({ list = [], onAdd }) => {
-  console.log("list", list);
-
   return (
     <section className="pokemon">
       <ul className="pokemon-list">

@@ -4,7 +4,9 @@ import { Pokemon } from "../models/Pokemon";
 async function getPokemonByName(name: string) {
   try {
     const { data } = await api.get(`pokemon/${name}`);
-    return data as Pokemon;
+    const pokemon = data as Pokemon;
+    getMoreInfo(pokemon);
+    return pokemon;
   } catch (error) {
     console.error("Ocorreu um erro inesperado: ", error);
   }
@@ -20,16 +22,17 @@ async function getAllPokemon(limit: number, offset: number) {
     });
 
     const pokemonList = (await Promise.all(items)) as Pokemon[];
-    pokemonList.forEach((pokemon) => {
-      pokemon.name =
-        pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
-      getPriceByStats(pokemon);
-    });
+    pokemonList.forEach((pokemon) => getMoreInfo(pokemon));
 
     return pokemonList;
   } catch (error) {
     console.error("Ocorreu um erro inesperado: ", error);
   }
+}
+
+function getMoreInfo(pokemon: Pokemon) {
+  pokemon.name = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
+  getPriceByStats(pokemon);
 }
 
 function getPriceByStats(pokemon: Pokemon) {
@@ -38,7 +41,7 @@ function getPriceByStats(pokemon: Pokemon) {
     0
   );
 
-  pokemon.price = statsSum ?? 0;
+  pokemon.price = (statsSum ?? 0) * 10;
 }
 
 export { getPokemonByName, getAllPokemon };

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, MouseEvent, ChangeEvent } from "react";
+import React, { useState, useEffect } from "react";
 import "./index.css";
 
 import { Pokemon } from "../../models/Pokemon";
@@ -12,36 +12,29 @@ import {
 
 import pokeshopLogo from "../../assets/images/pokeshop-logo.png";
 import gamaLogo from "../../assets/images/gama-academy-logo.jpg";
+import SearchBar from "../components/SearchBar";
 
 const Home = () => {
   const [pokemonList, setPokemonList] = useState<Pokemon[]>([]);
   const [cardList, setCardList] = useState<Pokemon[]>([]);
-  const [pokemonQuery, setPokemonQuery] = useState<string>();
-  const [search, setSearch] = useState<string>("");
+  const [query, setQuery] = useState<string>();
 
   const handleAddPokemon = (pokemon: Pokemon) => {
     setCardList([...cardList, pokemon]);
   };
-  const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearch(event.target.value);
-  };
-
-  const handlePokemonQuery = (event: MouseEvent<HTMLButtonElement>) => {
-    setPokemonQuery(search);
-  };
 
   useEffect(() => {
-    console.log("pokemonQuery", pokemonQuery);
-    if (!pokemonQuery) {
+    console.log("pokemonQuery", query);
+    if (!query) {
       getAllPokemon(10, 20).then((response) => {
         setPokemonList(response as Pokemon[]);
       });
     } else {
-      getPokemonByName(pokemonQuery).then((response) => {
+      getPokemonByName(query).then((response) => {
         if (response) setPokemonList([response]);
       });
     }
-  }, [pokemonQuery]);
+  }, [query]);
 
   return (
     <>
@@ -53,19 +46,7 @@ const Home = () => {
             Gama edition
           </span>
         </section>
-        <section className="search">
-          <input
-            className="search-textbox"
-            type="search"
-            value={search}
-            onChange={handleSearch}
-            placeholder="Digite o nome do Pokémon..."
-            autoComplete="name"
-          />
-          <button className="search-button" onClick={handlePokemonQuery}>
-            Procurar
-          </button>
-        </section>
+        <SearchBar setQuery={setQuery} />
       </header>
       <main className="content">
         <PokemonList list={pokemonList} onAdd={handleAddPokemon} />
