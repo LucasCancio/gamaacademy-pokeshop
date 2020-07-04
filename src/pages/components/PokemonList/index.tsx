@@ -1,5 +1,5 @@
 import React from "react";
-import { Pokemon } from "../../../Model/Pokemon";
+import { Pokemon } from "../../../models/Pokemon";
 
 interface Props {
   list: Pokemon[];
@@ -22,7 +22,7 @@ const PokemonList: React.FC<Props> = ({ list = [], onAdd }) => {
                 alt="Imagem do Pokémon"
               />
               <p className="pokemon-card-price">
-                <span className="cash">R$</span>1000
+                <span className="cash">R$</span>{pokemon.price}
               </p>
               <button
                 className="pokemon-card-button"
