@@ -1,10 +1,14 @@
-import React from 'react';
-import './App.css';
+import React from "react";
+import "./index.css";
 
-const Home= ()=>{
-    return (
-        <h1>aa</h1>
-    )
-}
+import Header from "../components/Header";
+import Main from "../components/Main";
+
+const Home = () => {
+  return <>
+    <Header />;
+    <Main />
+  </>
+};
 
 export default Home;
