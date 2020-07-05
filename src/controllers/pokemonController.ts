@@ -1,5 +1,6 @@
 import api from "../services/pokeapi";
 import { Pokemon } from "../models/Pokemon";
+import { PokemonTypes } from "../models/PokemonTypes";
 
 async function getPokemonByName(name: string) {
   try {
@@ -32,6 +33,9 @@ async function getAllPokemon(limit: number, offset: number) {
 
 function getMoreInfo(pokemon: Pokemon) {
   pokemon.name = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
+  pokemon.types?.forEach((type) => {
+    type.type.image = PokemonTypes()[type.type.name].image;
+  });
   getPriceByStats(pokemon);
 }
 

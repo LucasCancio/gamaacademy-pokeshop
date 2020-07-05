@@ -47,6 +47,10 @@ html {
   margin: 10px;
 }
 
+.pokemon-card-type{
+  height: 70px;
+}
+
 .shop-cart {
   padding: 20px;
   margin: auto 0;

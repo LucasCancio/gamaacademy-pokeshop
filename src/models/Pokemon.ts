@@ -20,7 +20,7 @@ interface TypeResponse {
 interface Type {
   name: string;
   url: string;
-  image?: string;
+  image: string;
 }
 
 interface StatsReponse {
