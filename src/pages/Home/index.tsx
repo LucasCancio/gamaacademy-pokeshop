@@ -17,11 +17,29 @@ import { CartList, ShopItem } from "../../models/CartList";
 const Home = () => {
   const [pokemonList, setPokemonList] = useState<Pokemon[]>([]);
   const [query, setQuery] = useState<string>();
-
   const [cartList, setCartList] = useState<CartList>();
+
+  function handleChangeShiny(pokemon: Pokemon) {
+    console.log("pokemonList", pokemonList);
+    if (pokemonList) {
+      let newList = pokemonList.map((pok) => {
+        if (pok.id === pokemon.id && pok.isShiny === pokemon.isShiny) {
+          pok.isShiny = !pokemon.isShiny;
+
+          if (pokemon.isShiny) pok.price += 2000;
+          else pok.price -= 2000;
+        }
+        return pok;
+      });
+      setPokemonList(newList);
+    }
+  }
 
   const handleAddPokemon = (pokemon: Pokemon) => {
     if (pokemon) {
+      console.log("pokemon:", pokemon.name);
+      console.log("pokemon shiny:", pokemon.isShiny);
+      console.log("cartList", cartList);
       let isNewPokemon = true;
       let currentItems: ShopItem[];
       const newItem = { qtd: 1, pokemon };
@@ -32,7 +50,15 @@ const Home = () => {
         currentItems = cartList.items;
 
         currentItems.map((item) => {
-          if (item.pokemon.id === pokemon.id) {
+          console.log(
+            "Já existe no carrinho?",
+            item.pokemon.id === pokemon.id &&
+              item.pokemon.isShiny === pokemon.isShiny
+          );
+          if (
+            item.pokemon.id === pokemon.id &&
+            item.pokemon.isShiny === pokemon.isShiny
+          ) {
             item.qtd++;
             isNewPokemon = false;
           }
@@ -46,6 +72,8 @@ const Home = () => {
         return prev + cur.pokemon.price * cur.qtd;
       }, 0);
 
+      console.log("cartList", { items: currentItems, total });
+
       setCartList({ items: currentItems, total });
     }
   };
@@ -54,7 +82,10 @@ const Home = () => {
     if (cartList) {
       let items = cartList.items;
       items.map((item) => {
-        if (item.pokemon.id === pokemon.id) {
+        if (
+          item.pokemon.id === pokemon.id &&
+          item.pokemon.isShiny === pokemon.isShiny
+        ) {
           item.qtd--;
         }
         return item;
@@ -73,7 +104,7 @@ const Home = () => {
   useEffect(() => {
     console.log("pokemonQuery", query);
     if (!query) {
-      getAllPokemon(10, 20).then((response) => {
+      getAllPokemon(10, 0).then((response) => {
         setPokemonList(response as Pokemon[]);
       });
     } else {
@@ -106,7 +137,11 @@ const Home = () => {
         <SearchBar setQuery={setQuery} />
       </header>
       <main className="content">
-        <PokemonList list={pokemonList} onAdd={handleAddPokemon} />
+        <PokemonList
+          list={pokemonList}
+          onAdd={handleAddPokemon}
+          onChangeShiny={handleChangeShiny}
+        />
         <section className="shop-cart">
           <h1 className="shop-cart-title">Carrinho</h1>
           <ul className="shop-cart-itens">
@@ -116,7 +151,11 @@ const Home = () => {
                   <li className="cart-item" key={index}>
                     <img
                       className="item-image"
-                      src={shopItem.pokemon.sprites?.front_default}
+                      src={
+                        shopItem.pokemon.isShiny
+                          ? shopItem.pokemon.sprites?.front_shiny
+                          : shopItem.pokemon.sprites?.front_default
+                      }
                       alt="Imagem do item"
                     />
                     <span className="item-name">{shopItem.pokemon.name}</span>
@@ -141,7 +180,7 @@ const Home = () => {
                 );
               })
             ) : (
-              <></>
+              <p>Nenhum item no carrinho...</p>
             )}
           </ul>
           <div className="shop-cart-total">

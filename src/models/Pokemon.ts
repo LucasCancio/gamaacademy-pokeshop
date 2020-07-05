@@ -1,15 +1,18 @@
 export interface Pokemon {
-  id?: number;
+  id: number;
   name: string;
   url: string;
   price: number;
   sprites?: Sprites;
-  types?: TypeResponse[];
-  stats?: StatsReponse[];
+  types: TypeResponse[];
+  stats: StatsReponse[];
+  image: string;
+  isShiny: boolean;
 }
 
 interface Sprites {
   front_default: string;
+  front_shiny: string;
 }
 
 interface TypeResponse {

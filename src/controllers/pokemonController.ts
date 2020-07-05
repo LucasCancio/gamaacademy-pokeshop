@@ -36,6 +36,8 @@ function getMoreInfo(pokemon: Pokemon) {
   pokemon.types?.forEach((type) => {
     type.type.image = PokemonTypes()[type.type.name].image;
   });
+  pokemon.image = `https://pokeres.bastionbot.org/images/pokemon/${pokemon.id}.png`;
+  pokemon.isShiny = false;
   getPriceByStats(pokemon);
 }
 
@@ -46,6 +48,8 @@ function getPriceByStats(pokemon: Pokemon) {
   );
 
   pokemon.price = (statsSum ?? 0) * 10;
+
+  if (pokemon.name === "Mewtwo") pokemon.price = 100000;
 }
 
 export { getPokemonByName, getAllPokemon };

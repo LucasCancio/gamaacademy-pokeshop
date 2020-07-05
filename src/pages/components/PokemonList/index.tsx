@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { Pokemon } from "../../../models/Pokemon";
 
 interface Props {
   list: Pokemon[];
   onAdd: (pokemon: Pokemon) => void;
+  onChangeShiny: (pokemon: Pokemon) => void;
 }
 
-const PokemonList: React.FC<Props> = ({ list = [], onAdd }) => {
+const PokemonList: React.FC<Props> = ({ list = [], onAdd, onChangeShiny }) => {
   return (
     <section className="pokemon">
       <ul className="pokemon-list">
@@ -14,9 +15,15 @@ const PokemonList: React.FC<Props> = ({ list = [], onAdd }) => {
           return (
             <li className="pokemon-card" key={`pokemon-${index}`}>
               <h3 className="pokemon-card-name">{pokemon.name}</h3>
+              <h4>Nº {pokemon.id}</h4>
+              <button onClick={() => onChangeShiny(pokemon)}>Shiny On/Off</button>
               <img
                 className="pokemon-card-image"
-                src={pokemon.sprites?.front_default}
+                src={
+                  pokemon.isShiny
+                    ? pokemon.sprites?.front_shiny
+                    : pokemon.sprites?.front_default
+                }
                 alt="Imagem do Pokémon"
               />
               {pokemon.types?.map((type, index) => {

@@ -7,7 +7,9 @@ const SearchBar: React.FC<Props> = ({ setQuery }) => {
   const [search, setSearch] = useState<string>("");
 
   const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearch(event.target.value);
+    const value = event.target.value;
+    if (!value) setQuery(value);
+    setSearch(value);
   };
 
   function handleQuery(event: MouseEvent<HTMLButtonElement>) {
