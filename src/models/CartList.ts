@@ -1,6 +1,6 @@
 import { Pokemon } from "./Pokemon";
 
-export interface ShopList{
+export interface CartList{
     items: ShopItem[];
     total: number;
 }
