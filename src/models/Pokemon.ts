@@ -3,16 +3,14 @@ export interface Pokemon {
   name: string;
   url: string;
   price: number;
-  sprites?: Sprites;
+  sprites: Sprites;
   types: TypeResponse[];
   stats: StatsReponse[];
   image: string;
-  isShiny: boolean;
 }
 
 interface Sprites {
   front_default: string;
-  front_shiny: string;
 }
 
 interface TypeResponse {

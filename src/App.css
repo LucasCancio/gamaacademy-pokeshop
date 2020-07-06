@@ -42,17 +42,17 @@ html {
   flex-wrap: wrap;
 }
 
-.pokemon-card{
+.pokemon-card {
   box-shadow: 1px 1px 1px black;
   margin: 10px;
 }
 
-.pokemon-card-image{
-  height: 100px;
+.pokemon-card-image {
+  height: 200px;
 }
 
-.pokemon-card-type{
-  height: 70px;
+.pokemon-card-type {
+  height: 50px;
 }
 
 .shop-cart {
@@ -65,7 +65,7 @@ html {
   font-size: 1.6em;
 }
 
-.shop-cart-title{
+.shop-cart-title {
   text-align: center;
 }
 
@@ -100,4 +100,16 @@ html {
 
   display: flex;
   justify-content: space-around;
+}
+
+.blocked {
+  cursor: not-allowed !important;
+}
+
+.modal-notfound {
+  font-size: 1.3em;
+}
+
+.modal-notfound img {
+  width: 300px;
 }

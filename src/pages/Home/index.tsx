@@ -7,6 +7,7 @@ import PokemonList from "../components/PokemonList";
 import {
   getAllPokemon,
   getPokemonByName,
+  getPokemonByType,
 } from "../../controllers/pokemonController";
 
 import pokeshopLogo from "../../assets/images/pokeshop-logo.png";
@@ -14,32 +15,16 @@ import gamaLogo from "../../assets/images/gama-academy-logo.jpg";
 import SearchBar from "../components/SearchBar";
 import { CartList, ShopItem } from "../../models/CartList";
 
+import { Button, Modal } from "react-bootstrap";
+
 const Home = () => {
   const [pokemonList, setPokemonList] = useState<Pokemon[]>([]);
   const [query, setQuery] = useState<string>();
+  const [type, setType] = useState<number>();
   const [cartList, setCartList] = useState<CartList>();
-
-  function handleChangeShiny(pokemon: Pokemon) {
-    console.log("pokemonList", pokemonList);
-    if (pokemonList) {
-      let newList = pokemonList.map((pok) => {
-        if (pok.id === pokemon.id && pok.isShiny === pokemon.isShiny) {
-          pok.isShiny = !pokemon.isShiny;
-
-          if (pokemon.isShiny) pok.price += 2000;
-          else pok.price -= 2000;
-        }
-        return pok;
-      });
-      setPokemonList(newList);
-    }
-  }
 
   const handleAddPokemon = (pokemon: Pokemon) => {
     if (pokemon) {
-      console.log("pokemon:", pokemon.name);
-      console.log("pokemon shiny:", pokemon.isShiny);
-      console.log("cartList", cartList);
       let isNewPokemon = true;
       let currentItems: ShopItem[];
       const newItem = { qtd: 1, pokemon };
@@ -50,15 +35,7 @@ const Home = () => {
         currentItems = cartList.items;
 
         currentItems.map((item) => {
-          console.log(
-            "Já existe no carrinho?",
-            item.pokemon.id === pokemon.id &&
-              item.pokemon.isShiny === pokemon.isShiny
-          );
-          if (
-            item.pokemon.id === pokemon.id &&
-            item.pokemon.isShiny === pokemon.isShiny
-          ) {
+          if (item.pokemon.id === pokemon.id) {
             item.qtd++;
             isNewPokemon = false;
           }
@@ -72,8 +49,6 @@ const Home = () => {
         return prev + cur.pokemon.price * cur.qtd;
       }, 0);
 
-      console.log("cartList", { items: currentItems, total });
-
       setCartList({ items: currentItems, total });
     }
   };
@@ -82,10 +57,7 @@ const Home = () => {
     if (cartList) {
       let items = cartList.items;
       items.map((item) => {
-        if (
-          item.pokemon.id === pokemon.id &&
-          item.pokemon.isShiny === pokemon.isShiny
-        ) {
+        if (item.pokemon.id === pokemon.id) {
           item.qtd--;
         }
         return item;
@@ -102,27 +74,51 @@ const Home = () => {
   }
 
   useEffect(() => {
-    console.log("pokemonQuery", query);
     if (!query) {
+      console.log("pokemonQuery", query);
       getAllPokemon(10, 0).then((response) => {
         setPokemonList(response as Pokemon[]);
       });
     } else {
-      getPokemonByName(query).then((response) => {
-        if (response) setPokemonList([response]);
-      });
+      getPokemonByName(query)
+        .then((response) => {
+          if (response) setPokemonList([response]);
+        })
+        .catch((_) => {
+          setPokemonList([]);
+        });
     }
   }, [query]);
 
+  useEffect(() => {
+    if (type) {
+      getPokemonByType(type).then((response) => {
+        setPokemonList(response as Pokemon[]);
+      });
+    } else {
+      setQuery(undefined);
+    }
+  }, [type]);
+
   //Checando se há algum pokemon com qtde 0
   useEffect(() => {
-    if (cartList != null) {
+    if (cartList) {
       cartList.items.forEach((item, index) => {
         if (item.qtd === 0) cartList.items.splice(index, 1);
       });
-      setCartList(cartList);
+
+      if (cartList.items.length === 0) setCartList(undefined);
+      else setCartList(cartList);
     }
   }, [cartList]);
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => {
+    setCartList(undefined);
+    setShow(false);
+  };
+  const handleShow = () => setShow(true);
 
   return (
     <>
@@ -134,14 +130,10 @@ const Home = () => {
             Gama edition
           </span>
         </section>
-        <SearchBar setQuery={setQuery} />
+        <SearchBar setType={setType} setQuery={setQuery} />
       </header>
       <main className="content">
-        <PokemonList
-          list={pokemonList}
-          onAdd={handleAddPokemon}
-          onChangeShiny={handleChangeShiny}
-        />
+        <PokemonList list={pokemonList} onAdd={handleAddPokemon} />
         <section className="shop-cart">
           <h1 className="shop-cart-title">Carrinho</h1>
           <ul className="shop-cart-itens">
@@ -151,11 +143,7 @@ const Home = () => {
                   <li className="cart-item" key={index}>
                     <img
                       className="item-image"
-                      src={
-                        shopItem.pokemon.isShiny
-                          ? shopItem.pokemon.sprites?.front_shiny
-                          : shopItem.pokemon.sprites?.front_default
-                      }
+                      src={shopItem.pokemon.image}
                       alt="Imagem do item"
                     />
                     <span className="item-name">{shopItem.pokemon.name}</span>
@@ -190,9 +178,24 @@ const Home = () => {
               {cartList?.total}
             </p>
           </div>
-          <button className="shop-cart-button">Finalizar Compra</button>
+          <Button
+            variant="primary"
+            className={cartList ? "" : "blocked"}
+            disabled={cartList ? false : true}
+            onClick={handleShow}
+          >
+            Finalizar Compra
+          </Button>
+          <button className="shop-cart-button"></button>
         </section>
       </main>
+
+      <Modal size="sm" centered show={show} onHide={handleClose}>
+        <Modal.Body className="text-center">
+          <h1>Parabéns</h1>
+          <h3>Compra Realizada</h3>
+        </Modal.Body>
+      </Modal>
     </>
   );
 };

@@ -17,25 +17,23 @@ import dragonImage from "../assets/images/types/dragonType.png";
 import darkImage from "../assets/images/types/darkType.png";
 import fairyImage from "../assets/images/types/fairyType.png";
 
-export const PokemonTypes: any = () => {
-  return Object.freeze({
-    normal: { name: "Normal", image: normalImage },
-    fire: { name: "Fire", image: fireImage },
-    water: { name: "Water", image: waterImage },
-    grass: { name: "Grass", image: grassImage },
-    flying: { name: "Flying", image: flyingImage },
-    fighting: { name: "Fighting", image: fightingImage },
-    poison: { name: "Poison", image: poisonImage },
-    electric: { name: "Electric", image: electricImage },
-    ground: { name: "Ground", image: groundImage },
-    rock: { name: "Rock", image: rockImage },
-    psychic: { name: "Psychic", image: psychicImage },
-    ice: { name: "Ice", image: icelmage },
-    bug: { name: "Bug", image: bugImage },
-    ghost: { name: "Ghost", image: ghostImage },
-    steel: { name: "Steel", image: steelImage },
-    dragon: { name: "Dragon", image: dragonImage },
-    dark: { name: "Dark", image: darkImage },
-    fairy: { name: "Fairy", image: fairyImage },
-  });
-};
+export const PokemonTypes: any = Object.freeze({
+  normal: { id: 1, name: "Normal", image: normalImage },
+  fighting: { id: 2, name: "Fighting", image: fightingImage },
+  flying: { id: 3, name: "Flying", image: flyingImage },
+  poison: { id: 4, name: "Poison", image: poisonImage },
+  ground: { id: 5, name: "Ground", image: groundImage },
+  rock: { id: 6, name: "Rock", image: rockImage },
+  bug: { id: 7, name: "Bug", image: bugImage },
+  ghost: { id: 8, name: "Ghost", image: ghostImage },
+  steel: { id: 9, name: "Steel", image: steelImage },
+  fire: { id: 10, name: "Fire", image: fireImage },
+  water: { id: 11, name: "Water", image: waterImage },
+  grass: { id: 12, name: "Grass", image: grassImage },
+  electric: { id: 13, name: "Electric", image: electricImage },
+  psychic: { id: 14, name: "Psychic", image: psychicImage },
+  ice: { id: 15, name: "Ice", image: icelmage },
+  dragon: { id: 16, name: "Dragon", image: dragonImage },
+  dark: { id: 17, name: "Dark", image: darkImage },
+  fairy: { id: 18, name: "Fairy", image: fairyImage },
+});
