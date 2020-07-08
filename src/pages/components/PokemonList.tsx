@@ -1,18 +1,23 @@
 import React from "react";
-import { Pokemon } from "../../../models/Pokemon";
-import pokemonNotFound from "../../../assets/images/pokemon-notfound.png";
+import { Pokemon } from "../../models/Pokemon";
+import pokemonNotFound from "../../assets/images/pokemon-notfound.png";
 import { FaCartPlus } from "react-icons/fa";
 
 interface Props {
-  list: Pokemon[];
-  onAdd: (pokemon: Pokemon) => void;
+  pokemons: Pokemon[];
+  loading: boolean;
+  onCartAdd: (pokemon: Pokemon) => void;
 }
 
-const PokemonList: React.FC<Props> = ({ list, onAdd }) => {
+const PokemonList: React.FC<Props> = ({ pokemons, loading, onCartAdd }) => {
+  if (loading) {
+    return <h2>Loading...</h2>;
+  }
+
   return (
     <ul className="pokemon-list">
-      {list ? (
-        list.map((pokemon: Pokemon, index: number) => {
+      {pokemons ? (
+        pokemons.map((pokemon: Pokemon, index: number) => {
           return (
             <li className="pokemon" key={`pokemon-${index}`}>
               <div className="pokemon-header">
@@ -47,7 +52,7 @@ const PokemonList: React.FC<Props> = ({ list, onAdd }) => {
                 </p>
                 <button
                   className="pokemon-button btn btn-link"
-                  onClick={() => onAdd(pokemon)}
+                  onClick={() => onCartAdd(pokemon)}
                 >
                   <FaCartPlus />
                 </button>

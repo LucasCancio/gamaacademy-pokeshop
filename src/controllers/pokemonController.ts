@@ -2,16 +2,10 @@ import api from "../services/pokeapi";
 import { Pokemon } from "../models/Pokemon";
 import { PokemonTypes } from "../models/PokemonTypes";
 
-async function getPokemonByName(name: string) {
-  try {
-    const { data } = await api.get(`pokemon/${name}`);
-    const pokemon = data as Pokemon;
-    getMoreInfo(pokemon);
-
-    return pokemon;
-  } catch (error) {
-    throw new Error();
-  }
+function getPokemonByName(pokemonList: Pokemon[], name: string) {
+  return pokemonList.filter((pokemon) =>
+    pokemon.name.toLowerCase().includes(name.toLowerCase())
+  );
 }
 
 async function getAllPokemon(limit: number, offset: number) {
@@ -32,23 +26,12 @@ async function getAllPokemon(limit: number, offset: number) {
   }
 }
 
-async function getPokemonByType(typeId: number) {
-  try {
-    const response = await api.get(`type/${typeId}`);
-
-    let items = response.data.pokemon.map(async (item: any) => {
-      const pokemon = item.pokemon as Pokemon;
-      const response = await api.get(pokemon.url);
-      return response.data;
-    });
-
-    const pokemonList = (await Promise.all(items)) as Pokemon[];
-    pokemonList.forEach((pokemon) => getMoreInfo(pokemon));
-
-    return pokemonList;
-  } catch (error) {
-    console.error("Ocorreu um erro inesperado: ", error);
-  }
+function getPokemonByType(pokemonList: Pokemon[], typeName: string) {
+  return pokemonList.filter((pokemon) => {
+    return pokemon.types.some(
+      ({ type }) => type.name === typeName.toLowerCase()
+    );
+  });
 }
 
 function getMoreInfo(pokemon: Pokemon) {

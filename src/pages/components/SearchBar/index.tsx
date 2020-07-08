@@ -3,7 +3,7 @@ import { PokemonTypes } from "../../../models/PokemonTypes";
 
 interface Props {
   setQuery: (query: string) => void;
-  setType: (type: number) => void;
+  setType: (type: string) => void;
 }
 const SearchBar: React.FC<Props> = ({ setQuery, setType }) => {
   const [search, setSearch] = useState<string>("");
@@ -19,11 +19,11 @@ const SearchBar: React.FC<Props> = ({ setQuery, setType }) => {
     setQuery(search);
   }
   function handleType(event: ChangeEvent<HTMLSelectElement>) {
-    const value = Number(event.target.value);
+    const value = event.target.value;
     setType(value);
     if (value) {
       const [key] = Object.keys(PokemonTypes).filter(
-        (key) => PokemonTypes[key].id === value
+        (key) => PokemonTypes[key].name === value
       );
       const type = PokemonTypes[key];
       setCurrentTypeImage(type.image);
@@ -75,13 +75,13 @@ const SearchBar: React.FC<Props> = ({ setQuery, setType }) => {
           id="inputGroupSelect01"
           onChange={handleType}
         >
-          <option value={0} key={0}>
+          <option value={""} key={0}>
             -
           </option>
           {Object.keys(PokemonTypes).map((key) => {
             const type = PokemonTypes[key];
             return (
-              <option value={type.id} key={type.id}>
+              <option value={type.name} key={type.id}>
                 {type.name}
               </option>
             );

@@ -21,14 +21,38 @@ import { Modal } from "react-bootstrap";
 
 const Home = () => {
   const [pokemonList, setPokemonList] = useState<Pokemon[]>([]);
-  const [query, setQuery] = useState<string>();
-  const [type, setType] = useState<number>();
-  const [cartList, setCartList] = useState<CartList>();
 
-  const [activePage, setActivePage] = useState<number>(1);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
+  //Paginação
+  const itemsPerPage = 12;
+
+  useEffect(() => {
+    const fetchPokemon = async () => {
+      setLoading(true);
+      const res = await getAllPokemon(386, 0);
+      setPokemonList(res || []);
+      setLoading(false);
+      setCurrentPokemons(res);
+      setTotalItens(res?.length || 0);
+    };
+
+    fetchPokemon();
+  }, []);
+
   const [totalItens, setTotalItens] = useState<number>(0);
 
-  const itemsPerPage = 12;
+  //Pokemon atual
+
+  const [currentPokemons, setCurrentPokemons] = useState<Pokemon[]>();
+
+  //Mudar pagina
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
+  const [query, setQuery] = useState<string>();
+  const [typeName, setTypeName] = useState<string>();
+  const [cartList, setCartList] = useState<CartList>();
 
   function handlePokemonCart(
     event: ChangeEvent<HTMLInputElement>,
@@ -91,54 +115,32 @@ const Home = () => {
   }
 
   useEffect(() => {
-    const indexOfLast = activePage * itemsPerPage;
-    const indexOfFirst = indexOfLast - itemsPerPage;
+    const indexOfLastPokemon = currentPage * itemsPerPage;
+    const indexOfFirstPokemon = indexOfLastPokemon - itemsPerPage;
 
-    if (!query) {
-      getAllPokemon(itemsPerPage, indexOfFirst).then((response) => {
-        const pokemonRespose = response as Pokemon[];
-        setPokemonList(pokemonRespose);
-        setTotalItens(pokemonRespose.length);
-      });
+    setLoading(true);
+
+    let pokemons: Pokemon[] = [];
+    let currentPokemons: Pokemon[] = [];
+
+    if (typeName && !query) {
+      pokemons = getPokemonByType(pokemonList, typeName);
+    } else if (query && !typeName) {
+      pokemons = getPokemonByName(pokemonList, query);
+    } else if (query && typeName) {
+      pokemons = getPokemonByType(pokemonList, typeName);
+      pokemons = getPokemonByName(pokemons, query);
     } else {
-      getPokemonByName(query)
-        .then((response) => {
-          if (response) {
-            setPokemonList([response]);
-            setTotalItens(1);
-          }
-        })
-        .catch((_) => {
-          setPokemonList([]);
-          setTotalItens(0);
-        });
+      pokemons = pokemonList;
     }
-  }, [activePage, query, totalItens]);
 
-  useEffect(() => {
-    const indexOfLast = activePage * itemsPerPage;
-    const indexOfFirst = indexOfLast - itemsPerPage;
+    currentPokemons = pokemons.slice(indexOfFirstPokemon, indexOfLastPokemon);
 
-    if (type) {
-      const indexOfLast = activePage * itemsPerPage;
-      const indexOfFirst = indexOfLast - itemsPerPage;
+    setCurrentPokemons(currentPokemons);
+    setTotalItens(pokemons.length);
 
-      getPokemonByType(type).then((response) => {
-        const pokemonResponse = (response as Pokemon[]).splice(
-          indexOfFirst,
-          itemsPerPage
-        );
-        if (response) setPokemonList(pokemonResponse);
-        setTotalItens(pokemonResponse.length);
-      });
-    } else {
-      getAllPokemon(itemsPerPage, indexOfFirst).then((response) => {
-        const pokemonRespose = response as Pokemon[];
-        setPokemonList(pokemonRespose);
-        setTotalItens(pokemonRespose.length);
-      });
-    }
-  }, [activePage, type]);
+    setLoading(false);
+  }, [currentPage, pokemonList, query, totalItens, typeName]);
 
   //Checando se há algum pokemon com qtde 0
   useEffect(() => {
@@ -160,10 +162,6 @@ const Home = () => {
   };
   const handleShow = () => setShow(true);
 
-  const handlePageChange = (pageNumber: number) => {
-    setActivePage(pageNumber);
-  };
-
   return (
     <>
       <header className="header">
@@ -174,20 +172,26 @@ const Home = () => {
             <span>Gama</span> edition
           </span>
         </section>
-        <SearchBar setType={setType} setQuery={setQuery} />
+        <SearchBar setType={setTypeName} setQuery={setQuery} />
       </header>
       <main className="content">
         <div>
-          <PokemonList list={pokemonList} onAdd={handleAddPokemon} />
+          <PokemonList
+            pokemons={currentPokemons || []}
+            loading={loading}
+            onCartAdd={handleAddPokemon}
+          />
+
+          {/*  <PokemonList list={pokemonList} onAdd={handleAddPokemon} /> */}
           <span className="justify-content-center d-flex">
             <Pagination
               itemClass="page-item"
               linkClass="page-link"
-              activePage={activePage}
+              activePage={currentPage}
               itemsCountPerPage={itemsPerPage}
               totalItemsCount={totalItens}
               hideNavigation
-              onChange={handlePageChange}
+              onChange={paginate}
             />
           </span>
         </div>
@@ -279,7 +283,7 @@ const Home = () => {
       <footer className="footer">
         <span className="copyright">
           © 2020 Copyright:
-          <a href=""> Lucas Camargo Cancio, Inc,</a>
+          <a href="!#"> Lucas Camargo Cancio, Inc,</a>
           All rights reserved
         </span>
         <section className="social-midias">
