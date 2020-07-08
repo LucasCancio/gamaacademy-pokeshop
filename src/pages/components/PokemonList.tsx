@@ -1,8 +1,8 @@
 import React from "react";
 import { Pokemon } from "../../models/Pokemon";
 import pokemonNotFound from "../../assets/images/pokemon-notfound.png";
+import pokeLoad from "../../assets/images/poke-load.gif";
 import { FaCartPlus } from "react-icons/fa";
-
 interface Props {
   pokemons: Pokemon[];
   loading: boolean;
@@ -11,7 +11,12 @@ interface Props {
 
 const PokemonList: React.FC<Props> = ({ pokemons, loading, onCartAdd }) => {
   if (loading) {
-    return <h2>Loading...</h2>;
+    return (
+      <div className="loading">
+        <p>Carregando... </p>
+        <img src={pokeLoad} alt="loading..." />
+      </div>
+    );
   }
 
   return (
@@ -21,7 +26,7 @@ const PokemonList: React.FC<Props> = ({ pokemons, loading, onCartAdd }) => {
           return (
             <li className="pokemon" key={`pokemon-${index}`}>
               <div className="pokemon-header">
-                <h4 className="pokemon-id">Nº {pokemon.id}</h4>
+                <h4 className="pokemon-id">{pokemon.id}º</h4>
                 <div>
                   <h3 className="pokemon-name">{pokemon.name}</h3>
                   <div className="pokemon-types">
