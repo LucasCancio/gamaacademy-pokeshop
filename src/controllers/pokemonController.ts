@@ -1,7 +1,6 @@
 import api from "../services/pokeapi";
 import { Pokemon } from "../models/Pokemon";
 import { PokemonTypes } from "../models/PokemonTypes";
-import pokemonNotFound from "../assets/images/pokemon-notfound.png";
 
 async function getPokemonByName(name: string) {
   try {
@@ -58,9 +57,7 @@ function getMoreInfo(pokemon: Pokemon) {
     type.type.image = PokemonTypes[type.type.name].image;
   });
 
-  if (!pokemon.sprites.front_default) pokemon.image = pokemonNotFound;
-  else
-    pokemon.image = `https://pokeres.bastionbot.org/images/pokemon/${pokemon.id}.png`;
+  pokemon.image = `https://pokeres.bastionbot.org/images/pokemon/${pokemon.id}.png`;
 
   getPriceByStats(pokemon);
 }

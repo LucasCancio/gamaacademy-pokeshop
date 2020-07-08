@@ -7,6 +7,7 @@ interface Props {
 }
 const SearchBar: React.FC<Props> = ({ setQuery, setType }) => {
   const [search, setSearch] = useState<string>("");
+  const [currentTypeImage, setCurrentTypeImage] = useState<string>("");
 
   function handleSearch(event: ChangeEvent<HTMLInputElement>) {
     const value = event.target.value;
@@ -18,34 +19,75 @@ const SearchBar: React.FC<Props> = ({ setQuery, setType }) => {
     setQuery(search);
   }
   function handleType(event: ChangeEvent<HTMLSelectElement>) {
-    const value = event.target.value;
-    setType(Number(value));
+    const value = Number(event.target.value);
+    setType(value);
+    if (value) {
+      const [key] = Object.keys(PokemonTypes).filter(
+        (key) => PokemonTypes[key].id === value
+      );
+      const type = PokemonTypes[key];
+      setCurrentTypeImage(type.image);
+    } else {
+      setCurrentTypeImage("");
+    }
   }
 
   return (
     <section className="search">
-      <input
-        className="search-textbox"
-        type="search"
-        value={search}
-        onChange={handleSearch}
-        placeholder="Digite o nome do Pokémon..."
-        autoComplete="name"
-      />
-      <button className="search-button" onClick={handleQuery}>
-        Procurar
-      </button>
-      <select onChange={handleType}>
-        <option value="0">-Todos-</option>
-        {Object.keys(PokemonTypes).map((key) => {
-          const type = PokemonTypes[key];
-          return (
-            <option value={type.id} key={type.id}>
-              {type.name}
-            </option>
-          );
-        })}
-      </select>
+      <div className="input-group mb-3">
+        <div className="input-group-prepend">
+          <label className="input-group-text" htmlFor="inputGroupSelect01">
+            Nome
+          </label>
+        </div>
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Pokémon..."
+          value={search}
+          onChange={handleSearch}
+          aria-label="Recipient's username"
+          aria-describedby="button-addon2"
+        />
+        <div className="input-group-append">
+          <button
+            className="btn btn-outline-secondary"
+            type="button"
+            id="button-addon2"
+            onClick={handleQuery}
+          >
+            Procurar
+          </button>
+        </div>
+      </div>
+      <div className="input-group mb-3">
+        <div className="input-group-prepend">
+          <label className="input-group-text" htmlFor="inputGroupSelect01">
+            {currentTypeImage ? (
+              <img src={currentTypeImage} className="search-type-image" alt="Tipo do pokémon" />
+            ) : (
+              "Tipo"
+            )}
+          </label>
+        </div>
+        <select
+          className="custom-select"
+          id="inputGroupSelect01"
+          onChange={handleType}
+        >
+          <option value={0} key={0}>
+            -
+          </option>
+          {Object.keys(PokemonTypes).map((key) => {
+            const type = PokemonTypes[key];
+            return (
+              <option value={type.id} key={type.id}>
+                {type.name}
+              </option>
+            );
+          })}
+        </select>
+      </div>
     </section>
   );
 };

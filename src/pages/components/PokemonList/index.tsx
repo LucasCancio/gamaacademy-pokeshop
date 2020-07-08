@@ -1,5 +1,7 @@
 import React from "react";
 import { Pokemon } from "../../../models/Pokemon";
+import pokemonNotFound from "../../../assets/images/pokemon-notfound.png";
+import { FaCartPlus } from "react-icons/fa";
 
 interface Props {
   list: Pokemon[];
@@ -8,49 +10,55 @@ interface Props {
 
 const PokemonList: React.FC<Props> = ({ list, onAdd }) => {
   return (
-    <section className="pokemon">
-      <ul className="pokemon-list">
-        {list ? (
-          list.map((pokemon: Pokemon, index: number) => {
-            return (
-              <li className="pokemon-card" key={`pokemon-${index}`}>
-                <h3 className="pokemon-card-name">{pokemon.name}</h3>
-                <h4>Nº {pokemon.id}</h4>
+    <ul className="pokemon-list">
+      {list ? (
+        list.map((pokemon: Pokemon, index: number) => {
+          return (
+            <li className="pokemon" key={`pokemon-${index}`}>
+              <div className="pokemon-header">
+                <h4 className="pokemon-id">Nº {pokemon.id}</h4>
+                <div>
+                  <h3 className="pokemon-name">{pokemon.name}</h3>
+                  <div className="pokemon-types">
+                    {pokemon.types?.map((type, index) => {
+                      return (
+                        <img
+                          className="pokemon-type"
+                          key={`type-${index}`}
+                          src={type.type.image || pokemonNotFound}
+                          alt={type.type.name}
+                          title={type.type.name}
+                        />
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+              <div className="pokemon-body">
                 <img
-                  className="pokemon-card-image"
+                  className="pokemon-image"
                   src={pokemon.image}
                   alt="Imagem do Pokémon"
                 />
-                {pokemon.types?.map((type, index) => {
-                  return (
-                    <img
-                      className="pokemon-card-type"
-                      key={`type-${index}`}
-                      src={type.type.image}
-                      alt={type.type.name}
-                      title={type.type.name}
-                    />
-                  );
-                })}
-
-                <p className="pokemon-card-price">
-                  <span className="cash">R$</span>
-                  {pokemon.price}
+              </div>
+              <div className="pokemon-footer">
+                <p className="pokemon-price">
+                  <span className="cash">R${pokemon.price}</span>
                 </p>
                 <button
-                  className="pokemon-card-button"
+                  className="pokemon-button btn btn-link"
                   onClick={() => onAdd(pokemon)}
                 >
-                  Adicionar ao Carrinho
+                  <FaCartPlus />
                 </button>
-              </li>
-            );
-          })
-        ) : (
-          <></>
-        )}
-      </ul>
-    </section>
+              </div>
+            </li>
+          );
+        })
+      ) : (
+        <></>
+      )}
+    </ul>
   );
 };
 

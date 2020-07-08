@@ -4,7 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PokeShop</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
     <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./cart.css" />
     <script
       src="https://kit.fontawesome.com/6f90f4e53c.js"
       crossorigin="anonymous"
@@ -24,191 +31,170 @@
               src="./images/gama-academy-logo.jpg"
               alt="Logo do Gama Academy"
             />
-            Gama edition
+            <span>Gama</span> edition
           </span>
         </section>
         <section class="search">
-          <input
-            class="search-textbox"
-            type="search"
-            placeholder="Digite o nome do Pokémon..."
-            autocomplete="name"
-          />
-          <button class="search-button">Procurar</button>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <label class="input-group-text" for="inputGroupSelect01"
+                >Nome</label
+              >
+            </div>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Pokémon..."
+              aria-label="Recipient's username"
+              aria-describedby="button-addon2"
+            />
+            <div class="input-group-append">
+              <button
+                class="btn btn-outline-secondary"
+                type="button"
+                id="button-addon2"
+              >
+                Procurar
+              </button>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <label class="input-group-text" for="inputGroupSelect01"
+                >Tipo</label
+              >
+            </div>
+            <select class="custom-select" id="inputGroupSelect01">
+              <option selected>-</option>
+              <option value="1">Dark</option>
+            </select>
+          </div>
         </section>
       </header>
       <main class="content">
-        <section class="pokemon">
-          <ul class="pokemon-list">
-            <li class="pokemon-card">
-              <h3 class="pokemon-card-name">Unown</h3>
+        <ul class="pokemon-list">
+          <li class="pokemon" key="2">
+            <div class="pokemon-header">
+              <h4 class="pokemon-id">Nº 1</h4>
+              <div>
+                <h3 class="pokemon-name">Unown</h3>
+                <div class="pokemon-types">
+                  <img
+                    class="pokemon-type"
+                    key="1"
+                    src="../src/assets/images/types/darkType.png"
+                    alt="teste"
+                    title="dark"
+                  />
+                  <img
+                    class="pokemon-type"
+                    key="1"
+                    src="../src/assets/images/types/bugType.png"
+                    alt="teste"
+                    title="bug"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="pokemon-body">
               <img
-                class="pokemon-card-image"
-                src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/201.png"
+                class="pokemon-image"
+                src="https://pokeres.bastionbot.org/images/pokemon/201.png"
                 alt="Imagem do Pokémon"
               />
-              <p class="pokemon-card-price"><span class="cash">R$</span>1000</p>
-              <button class="pokemon-card-button">Adicionar ao Carrinho</button>
-            </li>
-            <li class="pokemon-card">
-              <h3 class="pokemon-card-name">Unown</h3>
-              <img
-                class="pokemon-card-image"
-                src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/201.png"
-                alt="Imagem do Pokémon"
-              />
-              <p class="pokemon-card-price"><span class="cash">R$</span>1000</p>
-              <button class="pokemon-card-button">Adicionar ao Carrinho</button>
-            </li>
-            <li class="pokemon-card">
-              <h3 class="pokemon-card-name">Unown</h3>
-              <img
-                class="pokemon-card-image"
-                src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/201.png"
-                alt="Imagem do Pokémon"
-              />
-              <p class="pokemon-card-price"><span class="cash">R$</span>1000</p>
-              <button class="pokemon-card-button">Adicionar ao Carrinho</button>
-            </li>
-            <li class="pokemon-card">
-              <h3 class="pokemon-card-name">Unown</h3>
-              <img
-                class="pokemon-card-image"
-                src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/201.png"
-                alt="Imagem do Pokémon"
-              />
-              <p class="pokemon-card-price"><span class="cash">R$</span>1000</p>
-              <button class="pokemon-card-button">Adicionar ao Carrinho</button>
-            </li>
-            <li class="pokemon-card">
-              <h3 class="pokemon-card-name">Unown</h3>
-              <img
-                class="pokemon-card-image"
-                src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/201.png"
-                alt="Imagem do Pokémon"
-              />
-              <p class="pokemon-card-price"><span class="cash">R$</span>1000</p>
-              <button class="pokemon-card-button">Adicionar ao Carrinho</button>
-            </li>
-            <li class="pokemon-card">
-              <h3 class="pokemon-card-name">Unown</h3>
-              <img
-                class="pokemon-card-image"
-                src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/201.png"
-                alt="Imagem do Pokémon"
-              />
-              <p class="pokemon-card-price"><span class="cash">R$</span>1000</p>
-              <button class="pokemon-card-button">Adicionar ao Carrinho</button>
-            </li>
-            <li class="pokemon-card">
-              <h3 class="pokemon-card-name">Unown</h3>
-              <img
-                class="pokemon-card-image"
-                src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/201.png"
-                alt="Imagem do Pokémon"
-              />
-              <p class="pokemon-card-price"><span class="cash">R$</span>1000</p>
-              <button class="pokemon-card-button">Adicionar ao Carrinho</button>
-            </li>
-            <li class="pokemon-card">
-              <h3 class="pokemon-card-name">Unown</h3>
-              <img
-                class="pokemon-card-image"
-                src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/201.png"
-                alt="Imagem do Pokémon"
-              />
-              <p class="pokemon-card-price"><span class="cash">R$</span>1000</p>
-              <button class="pokemon-card-button">Adicionar ao Carrinho</button>
-            </li>
-            <li class="pokemon-card">
-              <h3 class="pokemon-card-name">Unown</h3>
-              <img
-                class="pokemon-card-image"
-                src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/201.png"
-                alt="Imagem do Pokémon"
-              />
-              <p class="pokemon-card-price"><span class="cash">R$</span>1000</p>
-              <button class="pokemon-card-button">Adicionar ao Carrinho</button>
-            </li>
-            <li class="pokemon-card">
-              <h3 class="pokemon-card-name">Unown</h3>
-              <img
-                class="pokemon-card-image"
-                src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/201.png"
-                alt="Imagem do Pokémon"
-              />
-              <p class="pokemon-card-price"><span class="cash">R$</span>1000</p>
-              <button class="pokemon-card-button">Adicionar ao Carrinho</button>
-            </li>
-            <li class="pokemon-card">
-              <h3 class="pokemon-card-name">Unown</h3>
-              <img
-                class="pokemon-card-image"
-                src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/201.png"
-                alt="Imagem do Pokémon"
-              />
-              <p class="pokemon-card-price"><span class="cash">R$</span>1000</p>
-              <button class="pokemon-card-button">Adicionar ao Carrinho</button>
-            </li>
-            <li class="pokemon-card">
-              <h3 class="pokemon-card-name">Unown</h3>
-              <img
-                class="pokemon-card-image"
-                src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/201.png"
-                alt="Imagem do Pokémon"
-              />
-              <p class="pokemon-card-price"><span class="cash">R$</span>1000</p>
-              <button class="pokemon-card-button">Adicionar ao Carrinho</button>
-            </li>
-            <li class="pokemon-card">
-              <h3 class="pokemon-card-name">Unown</h3>
-              <img
-                class="pokemon-card-image"
-                src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/201.png"
-                alt="Imagem do Pokémon"
-              />
-              <p class="pokemon-card-price"><span class="cash">R$</span>1000</p>
-              <button class="pokemon-card-button">Adicionar ao Carrinho</button>
-            </li>
-          </ul>
-        </section>
-        <section class="shop-cart">
-          <h1 class="shop-cart-title">Carrinho</h1>
-          <ul class="shop-cart-itens">
-            <li class="cart-item">
-              <img
-                class="item-image"
-                src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/201.png"
-                alt="Imagem do item"
-              />
-              <span class="item-name">Unown</span>
-              <span class="item-price"><span class="cash">R$</span>1000</span>
-            </li>
-            <li class="cart-item">
-              <img
-                class="item-image"
-                src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/201.png"
-                alt="Imagem do item"
-              />
-              <span class="item-name">Unown</span>
-              <span class="item-price"><span class="cash">R$</span>1000</span>
-            </li>
-            <li class="cart-item">
-              <img
-                class="item-image"
-                src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/201.png"
-                alt="Imagem do item"
-              />
-              <span class="item-name">Unown</span>
-              <span class="item-price"><span class="cash">R$</span>1000</span>
-            </li>
-          </ul>
-          <div class="shop-cart-total">
-            <h3>Total</h3>
-            <p class="total-price"><span class="cash">R$</span>1000</p>
+            </div>
+            <div class="pokemon-footer">
+              <p class="pokemon-price">
+                <span class="cash">R$199</span>
+              </p>
+              <a class="pokemon-button">
+                <i class="fas fa-cart-plus"></i>
+              </a>
+            </div>
+          </li>
+        </ul>
+        <div class="container bootstrap snippet">
+          <div class="col-md-9 col-sm-8 content">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="panel panel-info panel-shadow">
+                  <div class="panel-body d-flex flex-column justify-content-center">
+                    <div>
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th></th>
+                            <th>Nome</th>
+                            <th>Quantidade</th>
+                            <th>Preço</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>
+                              <img
+                                src="https://pokeres.bastionbot.org/images/pokemon/201.png"
+                                class="img-cart"
+                              />
+                            </td>
+                            <td>
+                              <strong>Unown</strong>
+                            </td>
+                            <td>
+                              <form class="form-inline">
+                                <input
+                                  class="form-control"
+                                  type="number"
+                                  value="1"
+                                  min="0"
+                                />
+                              </form>
+                            </td>
+                            <td>$54.00</td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <img
+                                src="https://pokeres.bastionbot.org/images/pokemon/201.png"
+                                class="img-cart"
+                              />
+                            </td>
+                            <td>
+                              <strong>Unown</strong>
+                            </td>
+                            <td>
+                              <form class="form-inline">
+                                <input
+                                  class="form-control"
+                                  type="number"
+                                  value="2"
+                                  min="0"
+                                />
+                              </form>
+                            </td>
+                            <td>$16.00</td>
+                          </tr>
+                          <tr>
+                            <td colspan="3" class="text-right">
+                              <strong>Total</strong>
+                            </td>
+                            <td>$88.00</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <a href="#" class="btn btn-success"
+                              ><span
+                                class="glyphicon glyphicon-arrow-left"
+                              ></span
+                              >&nbsp;Comprar</a
+                            >
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <button class="shop-cart-button">Finalizar Compra</button>
-        </section>
+        </div>
       </main>
       <footer class="footer">
         <span class="copyright">
