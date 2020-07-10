@@ -1,44 +1,38 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# <img src="https://pngimg.com/uploads/pokeball/pokeball_PNG8.png" width="25" /> PokeShop  <img src="https://pngimg.com/uploads/pokeball/pokeball_PNG8.png" width="25" />
+##### Desafio: Loja Online - Pokestore - Hiring Coders
+___
+### 🤔 O que é o Hiring Coders?
+Criado pela [Gama Academy](https://gama.academy/), o [Hiring Coders](https://hiringcoders.gama.academy/) é um programa de educação e seleção de pessoas desenvolvedoras que desejam trabalhar nas principais empresas de tecnologia para e-commerce do Brasil.  
 
-## Available Scripts
+### 💻 Sobre o projeto
 
-In the project directory, you can run:
+<img src="https://i.pinimg.com/originals/a7/a8/d0/a7a8d06c754cfbbbc37e64cb118c513c.gif" width="200" /> 
 
-### `npm start`
+O desafio era construir uma **loja virtual** com o tema **Pokémon**.
+Os Pokémon (sim, esse é o plural) deverão ser mostrados a partir da **pokeapi**(https://pokeapi.co/), uma api com dados de todos os Pokémon (ou quase todos).
+Após requisitar os Pokémon, os preços poderiam ser definidos aleatoriamente, mantendo a consistência entre o carrinho lateral e o preço mostrado no catálogo.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### 👀 Resultados esperados
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+![](https://lh6.googleusercontent.com/JONJjYGRUnj_EkjqQg3xYOfs2k5DqT_3it6VkFAB12iv5B_q1tHc2DP-HR51U01sWNx9LLTEyyFhyLbHIGSyhvoDXDxvQSD3UWZ2fo_pdEuaoQ26WsVIDSVg-eA72vuJYoz6X2hQ)
 
-### `npm test`
+<p align="center">
+ <img src="https://img.shields.io/static/v1?label=Figma&message=Template&logo=figma&color=critical" /> 
+</p>
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+##### ✔ O MVP consiste em:
+ 
+- Catálogo de produtos
 
-### `npm run build`
+- Carrinho lateral
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Resumo do carrinho
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+##### 🚀 Para ir além:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- [X] Barra de busca para filtrar os Pokémon
+- [X] Botão de finalizar compra, reiniciando o processo de compra
+- [X] Modal de obrigado ao finalizar compra
+- [ ] Salvar os dados da compra do usuário localmente para não perdê-las ao atualizar a página
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+<img src="https://global-uploads.webflow.com/5e3f23e36b700d06c39a1265/5e4a97273e4de54af5cf9ba3_logo-gama.png" width="200" />
