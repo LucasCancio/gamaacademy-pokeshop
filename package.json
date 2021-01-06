@@ -9,7 +9,7 @@
     "@types/jest": "^24.9.1",
     "@types/node": "^12.12.47",
     "@types/react-dom": "^16.9.8",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bootstrap": "^4.5.0",
     "react": "^16.13.1",
     "react-awesome-reveal": "^2.4.2",
